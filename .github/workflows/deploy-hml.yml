@@ -1,0 +1,73 @@
+name: Trigger deploy
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Call deploy webhook
+        env:
+          WEBHOOK_URL: ${{ secrets.PUSH_WEBHOOK }}
+        run: |
+          set -uo pipefail
+ 
+          if [ -z "${WEBHOOK_URL}" ]; then
+            echo "::error::PUSH_WEBHOOK secret is empty or not set."
+            exit 1
+          fi
+ 
+          MAX_ATTEMPTS=5
+          BASE_DELAY=2
+          MAX_DELAY=60
+ 
+          attempt=1
+          while true; do
+            echo "::group::Attempt ${attempt}/${MAX_ATTEMPTS}"
+ 
+            http_code=$(curl -sS -o response.txt -w '%{http_code}' \
+              --connect-timeout 10 \
+              --max-time 30 \
+              -X POST "${WEBHOOK_URL}") || http_code="000"
+ 
+            echo "HTTP ${http_code}"
+            head -c 2000 response.txt 2>/dev/null || true
+            echo
+            echo "::endgroup::"
+ 
+            # Success.
+            if [ "${http_code}" -ge 200 ] && [ "${http_code}" -lt 300 ]; then
+              echo "Webhook accepted (HTTP ${http_code})."
+              exit 0
+            fi
+ 
+            if [ "${http_code}" -ge 400 ] && [ "${http_code}" -lt 500 ] \
+               && [ "${http_code}" != "408" ] && [ "${http_code}" != "429" ]; then
+              echo "::error::Webhook rejected with HTTP ${http_code}; not retrying."
+              exit 1
+            fi
+ 
+            if [ "${attempt}" -ge "${MAX_ATTEMPTS}" ]; then
+              echo "::error::Webhook failed after ${MAX_ATTEMPTS} attempts (last: HTTP ${http_code})."
+              exit 1
+            fi
+ 
+            delay=$(( BASE_DELAY * 2 ** (attempt - 1) ))
+            if [ "${delay}" -gt "${MAX_DELAY}" ]; then
+              delay="${MAX_DELAY}"
+            fi
+            delay=$(( delay + RANDOM % 3 ))
+ 
+            echo "Retrying in ${delay}s..."
+            sleep "${delay}"
+            attempt=$(( attempt + 1 ))
+          done
+ 
