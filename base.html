@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estoff Car - Estofaria Automotiva em Curitiba/PR</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandRed: '#FF2A2A',
+                        brandRedDark: '#CC0000',
+                        brandDark: '#0D0D0D',
+                        brandGrayDark: '#1A1A1A',
+                        brandGrayCard: '#242424',
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Styles for Before/After Slider */
+        .before-after-container {
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+        .before-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 50%;
+            overflow: hidden;
+            border-right: 3px solid #FF2A2A;
+        }
+        .before-image img {
+            height: 100%;
+            max-width: none;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: #FF2A2A;
+            cursor: ew-resize;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 36px;
+            height: 36px;
+            background-color: #FF2A2A;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-brandDark text-gray-100 font-sans antialiased">
+
+    <!-- BARRA SUPERIOR DE INFORMAÇÕES E CONTATO -->
+    <div class="bg-black text-gray-300 py-2 px-4 border-b border-gray-800 text-sm">
+        <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+            <div class="flex items-center space-x-4 text-xs md:text-sm">
+                <span><i class="fa-solid fa-location-dot text-brandRed mr-1"></i> Curitiba / PR</span>
+                <span><i class="fa-solid fa-user text-brandRed mr-1"></i> Contato: <strong>Danilo</strong></span>
+            </div>
+            <div class="flex items-center space-x-4 text-xs md:text-sm">
+                <a href="tel:41999757153" class="hover:text-brandRed transition flex items-center">
+                    <i class="fa-solid fa-phone text-brandRed mr-1"></i> (41) 99975-7153
+                </a>
+                <span class="hidden md:inline">|</span>
+                <span class="text-green-500 font-semibold"><i class="fa-brands fa-whatsapp text-lg mr-1"></i> Atendimento Rápido</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CABEÇALHO PRINCIPAL (NAVEGAÇÃO À DIREITA) -->
+    <header class="sticky top-0 bg-brandDark/95 backdrop-blur-md border-b border-gray-800 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+            
+            <!-- LOGO / NOME -->
+            <a href="#" class="flex items-center group focus:outline-none focus:ring-2 focus:ring-brandRed rounded-lg p-1">
+                <div class="font-heading font-black text-2xl sm:text-3xl italic tracking-wider">
+                    <span class="text-brandRed">ESTOFF</span>
+                    <span class="text-white bg-brandRed px-2 py-0.5 rounded-md ml-1 not-italic">CAR</span>
+                </div>
+            </a>
+
+            <!-- NAVEGAÇÃO À DIREITA (DESKTOP) -->
+            <nav class="hidden lg:flex items-center space-x-8">
+                <ul class="flex space-x-6 text-sm font-semibold tracking-wide uppercase font-heading">
+                    <li><a href="#inicio" class="hover:text-brandRed transition py-2 border-b-2 border-transparent hover:border-brandRed">Início</a></li>
+                    <li><a href="#servicos" class="hover:text-brandRed transition py-2 border-b-2 border-transparent hover:border-brandRed">Serviços</a></li>
+                    <li><a href="#antes-depois" class="hover:text-brandRed transition py-2 border-b-2 border-transparent hover:border-brandRed">Antes & Depois</a></li>
+                    <li><a href="#contato" class="hover:text-brandRed transition py-2 border-b-2 border-transparent hover:border-brandRed">Contato</a></li>
+                </ul>
+
+                <!-- REDES SOCIAIS E WHATSAPP À DIREITA -->
+                <div class="flex items-center space-x-3 pl-4 border-l border-gray-800">
+                    <a href="https://wa.me/5541999757153" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Danilo Estoff Car" class="w-10 h-10 rounded-full bg-green-600 hover:bg-green-500 text-white flex items-center justify-center transition shadow-lg hover:scale-105">
+                        <i class="fa-brands fa-whatsapp text-xl"></i>
+                    </a>
+                    <a href="https://www.instagram.com/estoffcar/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Estoff Car" class="w-10 h-10 rounded-full bg-brandGrayCard hover:bg-brandRed text-white flex items-center justify-center transition hover:scale-105">
+                        <i class="fa-brands fa-instagram text-lg"></i>
+                    </a>
+                    <a href="https://www.facebook.com/daniloestoffcar/?locale=pt_BR" target="_blank" rel="noopener noreferrer" aria-label="Facebook Estoff Car" class="w-10 h-10 rounded-full bg-brandGrayCard hover:bg-blue-600 text-white flex items-center justify-center transition hover:scale-105">
+                        <i class="fa-brands fa-facebook-f text-lg"></i>
+                    </a>
+                </div>
+            </nav>
+
+            <!-- BOTÃO MENU MOBILE -->
+            <button id="mobile-menu-btn" class="lg:hidden text-gray-300 hover:text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-brandRed">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- MENU MOBILE DROPDOWN -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-brandGrayDark border-b border-gray-800 px-4 pt-2 pb-6 space-y-4">
+            <a href="#inicio" class="block py-2 font-heading font-semibold hover:text-brandRed border-b border-gray-800">Início</a>
+            <a href="#servicos" class="block py-2 font-heading font-semibold hover:text-brandRed border-b border-gray-800">Serviços</a>
+            <a href="#antes-depois" class="block py-2 font-heading font-semibold hover:text-brandRed border-b border-gray-800">Antes & Depois</a>
+            <a href="#contato" class="block py-2 font-heading font-semibold hover:text-brandRed border-b border-gray-800">Contato</a>
+            
+            <div class="flex items-center space-x-4 pt-2">
+                <a href="https://wa.me/5541999757153" target="_blank" rel="noopener noreferrer" class="flex-1 bg-green-600 hover:bg-green-500 text-white py-2.5 rounded-lg font-bold text-center flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp
+                </a>
+                <a href="https://www.instagram.com/estoffcar/" target="_blank" rel="noopener noreferrer" class="p-2.5 bg-brandGrayCard rounded-lg text-white hover:text-brandRed" aria-label="Instagram Estoff Car">
+                    <i class="fa-brands fa-instagram text-xl"></i>
+                </a>
+                <a href="https://www.facebook.com/daniloestoffcar/?locale=pt_BR" target="_blank" rel="noopener noreferrer" class="p-2.5 bg-brandGrayCard rounded-lg text-white hover:text-blue-500" aria-label="Facebook Estoff Car">
+                    <i class="fa-brands fa-facebook-f text-xl"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION / BANNER PRINCIPAL COM IMAGEM -->
+    <section id="inicio" class="relative bg-brandGrayDark overflow-hidden py-12 lg:py-20 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- TEXTO HERO -->
+                <div class="lg:col-span-5 z-10 space-y-6">
+                    <div class="inline-flex items-center space-x-2 bg-brandRed/10 border border-brandRed/30 px-3 py-1 rounded-full text-brandRed font-semibold text-xs uppercase tracking-widest">
+                        <i class="fa-solid fa-car"></i> Estofaria de Alta Performance
+                    </div>
+                    <h1 class="font-heading font-black text-4xl sm:text-5xl lg:text-6xl text-white uppercase italic leading-tight">
+                        <span class="text-brandRed">Estofamento</span> Automotivo
+                    </h1>
+                    <p class="text-gray-300 text-base sm:text-lg">
+                        Transforme o interior do seu veículo com o padrão **ESTOFF CAR**. Bancos em couro, reparos personalizados, higienização e revestimentos sob medida em Curitiba/PR.
+                    </p>
+
+                    <!-- CAIXA DE CONTATO DESTACADA -->
+                    <div class="bg-brandGrayCard p-4 rounded-xl border border-gray-800 flex items-center justify-between">
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase font-semibold">Fale com o Responsável</p>
+                            <p class="text-lg font-bold text-white"><i class="fa-solid fa-user-gear text-brandRed mr-2"></i>Danilo</p>
+                            <p class="text-sm font-semibold text-brandRed">(41) 99975-7153</p>
+                        </div>
+                        <a href="https://wa.me/5541999757153?text=Olá%20Danilo,%20gostaria%20de%20fazer%20um%20orçamento!" target="_blank" class="bg-green-600 hover:bg-green-500 text-white px-4 py-3 rounded-lg font-bold text-sm uppercase flex items-center gap-2 transition shadow-lg hover:scale-105">
+                            <i class="fa-brands fa-whatsapp text-lg"></i> Orçamento
+                        </a>
+                    </div>
+                </div>
+
+                <!-- IMAGEM ILUSTRATIVA DE ESTOFAMENTO AUTOMOTIVO -->
+                <div class="lg:col-span-7 relative">
+                    <div class="relative rounded-2xl overflow-hidden border-2 border-brandRed/40 shadow-2xl shadow-brandRed/10 group">
+                        <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1200&q=80" alt="Estofamento em couro automotivo premium - Estoff Car" class="w-full h-80 sm:h-96 object-cover transform group-hover:scale-105 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+                            <span class="bg-black/80 backdrop-blur-md border border-brandRed/30 px-3 py-1.5 rounded-lg text-xs font-semibold text-white">
+                                <i class="fa-solid fa-location-dot text-brandRed mr-1"></i> Curitiba / PR
+                            </span>
+                            <span class="bg-brandRed text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider">
+                                Atendimento Danilo
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS / BANNERS RÁPIDOS -->
+    <section class="bg-brandDark py-8 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-brandGrayCard p-6 rounded-xl border-l-4 border-brandRed flex items-center space-x-4">
+                    <div class="text-brandRed text-3xl"><i class="fa-solid fa-award"></i></div>
+                    <div>
+                        <h3 class="font-heading font-bold text-white text-lg">Acabamento Premium</h3>
+                        <p class="text-sm text-gray-400">Materiais de altíssima durabilidade e acabamento original.</p>
+                    </div>
+                </div>
+
+                <div class="bg-brandGrayCard p-6 rounded-xl border-l-4 border-brandRed flex items-center space-x-4">
+                    <div class="text-brandRed text-3xl"><i class="fa-solid fa-clock"></i></div>
+                    <div>
+                        <h3 class="font-heading font-bold text-white text-lg">Agilidade na Entrega</h3>
+                        <p class="text-sm text-gray-400">Prazos cumpridos rigorosamente com garantia de serviço.</p>
+                    </div>
+                </div>
+
+                <div class="bg-brandGrayCard p-6 rounded-xl border-l-4 border-brandRed flex items-center space-x-4">
+                    <div class="text-brandRed text-3xl"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <div>
+                        <h3 class="font-heading font-bold text-white text-lg">Preço Justo</h3>
+                        <p class="text-sm text-gray-400">Orçamentos sem compromisso e condições facilitadas.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="py-16 bg-brandGrayDark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-brandRed uppercase tracking-widest mb-2">Nossas Especialidades</h2>
+                <p class="font-heading font-black text-3xl sm:text-4xl text-white uppercase italic">Serviços da Estoff Car</p>
+                <div class="w-20 h-1 bg-brandRed mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- CARD SERVIÇO 1 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800 hover:border-brandRed/50 transition duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=600&q=80" alt="Pintura e restauração de bancos em couro" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brandGrayCard via-transparent to-transparent"></div>
+                            <div class="absolute top-3 left-3 w-10 h-10 bg-brandRed rounded-lg flex items-center justify-center text-white text-lg shadow-lg">
+                                <i class="fa-solid fa-spray-can-sparkles"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-heading font-bold text-xl text-white mb-2">Pinturas no Banco em Couro</h3>
+                            <p class="text-gray-400 text-sm mb-4">Restauração de cor, renovação e pintura especializada para eliminar desgastes e devolver o aspecto original ao couro.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-0">
+                        <a href="https://wa.me/5541999757153?text=Olá%20Danilo!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20*Pintura%20no%20Banco%20em%20Couro*%20do%20meu%20veículo." target="_blank" rel="noopener noreferrer" class="text-brandRed font-bold text-sm inline-flex items-center hover:underline">
+                            Consultar <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD SERVIÇO 2 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800 hover:border-brandRed/50 transition duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=600&q=80" alt="Reformas e costura de estofados automotivos" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brandGrayCard via-transparent to-transparent"></div>
+                            <div class="absolute top-3 left-3 w-10 h-10 bg-brandRed rounded-lg flex items-center justify-center text-white text-lg shadow-lg">
+                                <i class="fa-solid fa-car-side"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-heading font-bold text-xl text-white mb-2">Reformas de Estofados</h3>
+                            <p class="text-gray-400 text-sm mb-4">Troca de espuma, conserto de rasgos, costuras estouradas e substituição de tecidos desgastados.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-0">
+                        <a href="https://wa.me/5541999757153?text=Olá%20Danilo!%20Gostaria%20de%20um%20orçamento%20para%20*Reforma%20de%20Estofado%20/%20Costura*%20no%20meu%20veículo." target="_blank" rel="noopener noreferrer" class="text-brandRed font-bold text-sm inline-flex items-center hover:underline">
+                            Consultar <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD SERVIÇO 3 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800 hover:border-brandRed/50 transition duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=600&q=80" alt="Revestimento de volante, teto e portas" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brandGrayCard via-transparent to-transparent"></div>
+                            <div class="absolute top-3 left-3 w-10 h-10 bg-brandRed rounded-lg flex items-center justify-center text-white text-lg shadow-lg">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-heading font-bold text-xl text-white mb-2">Teto, Portas e Volantes</h3>
+                            <p class="text-gray-400 text-sm mb-4">Revestimento de teto descolado, laterais de porta, manoplas e volantes com acabamento artesanal.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-0">
+                        <a href="https://wa.me/5541999757153?text=Olá%20Danilo!%20Gostaria%20de%20um%20orçamento%20para%20revestimento%20de%20*Teto,%20Portas%20ou%20Volante*." target="_blank" rel="noopener noreferrer" class="text-brandRed font-bold text-sm inline-flex items-center hover:underline">
+                            Consultar <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD SERVIÇO 4 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800 hover:border-brandRed/50 transition duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?auto=format&fit=crop&w=600&q=80" alt="Higienização e hidratação de couro automotivo" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brandGrayCard via-transparent to-transparent"></div>
+                            <div class="absolute top-3 left-3 w-10 h-10 bg-brandRed rounded-lg flex items-center justify-center text-white text-lg shadow-lg">
+                                <i class="fa-solid fa-sparkles"></i>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-heading font-bold text-xl text-white mb-2">Higienização e Hidratação</h3>
+                            <p class="text-gray-400 text-sm mb-4">Limpeza profunda de estofados e hidratação especial para couros, mantendo o aspecto de novo.</p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5 pt-0">
+                        <a href="https://wa.me/5541999757153?text=Olá%20Danilo!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20*Higienização%20e%20Hidratação%20de%20Couro*." target="_blank" rel="noopener noreferrer" class="text-brandRed font-bold text-sm inline-flex items-center hover:underline">
+                            Consultar <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO ANTES E DEPOIS (SLIDER INTERATIVO + GALERIA) -->
+    <section id="antes-depois" class="py-16 bg-brandDark border-t border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-brandRed uppercase tracking-widest mb-2">Comprovação de Qualidade</h2>
+                <p class="font-heading font-black text-3xl sm:text-4xl text-white uppercase italic">Trabalhos: Antes & Depois</p>
+                <p class="text-gray-400 mt-2 text-sm">Arraste o divisor nas imagens para comparar a restauração feita pela Estoff Car.</p>
+                <div class="w-20 h-1 bg-brandRed mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- COMPARADOR SLIDER INTERATIVO PRINCIPAL -->
+            <div class="max-w-4xl mx-auto mb-12">
+                <div class="before-after-container rounded-2xl overflow-hidden shadow-2xl border-2 border-brandRed/30 h-80 sm:h-96" id="interactive-slider">
+                    <!-- Imagem DEPOIS (Fundo) -->
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&q=80" alt="Depois do serviço da Estoff Car" class="w-full h-full object-cover">
+                    <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-md z-10 shadow">DEPOIS (NOVO)</span>
+
+                    <!-- Imagem ANTES (Sobreposição com largura controlada) -->
+                    <div class="before-image" id="before-img">
+                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=1200&q=80" alt="Antes do serviço de reforma" class="w-full h-full object-cover filter grayscale contrast-125">
+                        <span class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold px-3 py-1 rounded-md shadow">ANTES (DESGASTADO)</span>
+                    </div>
+
+                    <!-- Divisor e Botão de Arraste -->
+                    <div class="slider-handle" id="slider-handle">
+                        <div class="slider-button">
+                            <i class="fa-solid fa-arrows-left-right text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-xs text-gray-500 mt-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Arraste para os lados para ver a transformação</p>
+            </div>
+
+            <!-- GALERIA ADICIONAL DE EXEMPLOS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- EXEMPLO 1 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800">
+                    <div class="grid grid-cols-2 gap-1 p-1 bg-black">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=400&q=80" alt="Banco com rasgo e desgaste" class="w-full h-36 object-cover">
+                            <span class="absolute bottom-2 left-2 bg-brandRed text-white text-[10px] font-bold px-1.5 py-0.5 rounded">ANTES</span>
+                        </div>
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=400&q=80" alt="Banco em couro reformado" class="w-full h-36 object-cover">
+                            <span class="absolute bottom-2 left-2 bg-green-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">DEPOIS</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-heading font-bold text-white text-base">Restauração de Banco de Couro</h4>
+                        <p class="text-gray-400 text-xs mt-1">Reparo de rasgos na lateral do motorista e hidratação completa.</p>
+                    </div>
+                </div>
+
+                <!-- EXEMPLO 2 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800">
+                    <div class="grid grid-cols-2 gap-1 p-1 bg-black">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80" alt="Volante desgastado" class="w-full h-36 object-cover filter grayscale">
+                            <span class="absolute bottom-2 left-2 bg-brandRed text-white text-[10px] font-bold px-1.5 py-0.5 rounded">ANTES</span>
+                        </div>
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=400&q=80" alt="Volante costurado em couro novo" class="w-full h-36 object-cover">
+                            <span class="absolute bottom-2 left-2 bg-green-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">DEPOIS</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-heading font-bold text-white text-base">Revestimento de Volante</h4>
+                        <p class="text-gray-400 text-xs mt-1">Costura artesanal vermelha e couro perfurado de alta aderência.</p>
+                    </div>
+                </div>
+
+                <!-- EXEMPLO 3 -->
+                <div class="bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800">
+                    <div class="grid grid-cols-2 gap-1 p-1 bg-black">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=400&q=80" alt="Teto automotivo caído" class="w-full h-36 object-cover filter sepia">
+                            <span class="absolute bottom-2 left-2 bg-brandRed text-white text-[10px] font-bold px-1.5 py-0.5 rounded">ANTES</span>
+                        </div>
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=400&q=80" alt="Teto automotivo refeito" class="w-full h-36 object-cover">
+                            <span class="absolute bottom-2 left-2 bg-green-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">DEPOIS</span>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-heading font-bold text-white text-base">Troca de Tecido do Teto</h4>
+                        <p class="text-gray-400 text-xs mt-1">Substituição do tecido descolado por material original com alta fixação.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SEÇÃO CONTATO E LOCALIZAÇÃO (CURITIBA/PR) -->
+    <section id="contato" class="py-16 bg-brandGrayDark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                
+                <!-- INFORMAÇÕES DE CONTATO -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <h2 class="text-xs font-bold text-brandRed uppercase tracking-widest mb-2">Fale Conosco</h2>
+                        <h3 class="font-heading font-black text-3xl sm:text-4xl text-white uppercase italic">Faça Seu Orçamento</h3>
+                        <div class="w-16 h-1 bg-brandRed mt-3 rounded-full"></div>
+                    </div>
+
+                    <p class="text-gray-300">
+                        Atendimento personalizado com **Danilo**. Traga seu carro até a Estoff Car ou envie fotos do estado atual do seu estofado para um orçamento rápido via WhatsApp.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-4 bg-brandGrayCard p-4 rounded-xl border border-gray-800">
+                            <div class="w-12 h-12 bg-brandRed/20 text-brandRed rounded-lg flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-semibold uppercase">Telefone / WhatsApp</p>
+                                <p class="text-lg font-bold text-white">(41) 99975-7153</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 bg-brandGrayCard p-4 rounded-xl border border-gray-800">
+                            <div class="w-12 h-12 bg-brandRed/20 text-brandRed rounded-lg flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-semibold uppercase">Localização</p>
+                                <p class="text-lg font-bold text-white">Curitiba / PR</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 bg-brandGrayCard p-4 rounded-xl border border-gray-800">
+                            <div class="w-12 h-12 bg-brandRed/20 text-brandRed rounded-lg flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-400 font-semibold uppercase">Atendimento Especializado</p>
+                                <p class="text-lg font-bold text-white">Danilo</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTÕES DE REDES SOCIAIS NA SEÇÃO DE CONTATO -->
+                    <div class="pt-2">
+                        <p class="text-xs text-gray-400 uppercase font-semibold mb-3">Siga a Estoff Car nas Redes</p>
+                        <div class="flex space-x-3">
+                            <a href="https://wa.me/5541999757153" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-green-600 hover:bg-green-500 rounded-lg text-white font-bold text-sm flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-lg"></i> WhatsApp
+                            </a>
+                            <a href="https://www.instagram.com/estoffcar/" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-brandGrayCard hover:bg-brandRed rounded-lg text-white font-bold text-sm flex items-center gap-2 transition">
+                                <i class="fa-brands fa-instagram text-lg"></i> Instagram
+                            </a>
+                            <a href="https://www.facebook.com/daniloestoffcar/?locale=pt_BR" target="_blank" rel="noopener noreferrer" class="px-4 py-2.5 bg-brandGrayCard hover:bg-blue-600 rounded-lg text-white font-bold text-sm flex items-center gap-2 transition">
+                                <i class="fa-brands fa-facebook-f text-lg"></i> Facebook
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORMULÁRIO DE SIMULAÇÃO DE ORÇAMENTO -->
+                <div class="lg:col-span-7 bg-brandGrayCard p-6 sm:p-8 rounded-2xl border border-gray-800 shadow-xl">
+                    <h3 class="font-heading font-bold text-2xl text-white mb-2">Envie uma Mensagem Direta</h3>
+                    <p class="text-gray-400 text-sm mb-6">Preencha os dados abaixo para simular seu orçamento diretamente no WhatsApp do Danilo.</p>
+
+                    <form id="whatsapp-form" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-gray-300 mb-1" for="nome">Seu Nome</label>
+                            <input type="text" id="nome" required placeholder="Ex: João Silva" class="w-full bg-brandDark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brandRed transition">
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase text-gray-300 mb-1" for="modelo">Modelo do Veículo</label>
+                                <input type="text" id="modelo" required placeholder="Ex: Lancer / Civic / Gol" class="w-full bg-brandDark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brandRed transition">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase text-gray-300 mb-1" for="servico">Serviço Desejado</label>
+                                <select id="servico" class="w-full bg-brandDark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brandRed transition">
+                                    <option value="Pinturas no Banco em Couro">Pinturas no Banco em Couro</option>
+                                    <option value="Reforma de Estofado">Reforma de Estofado</option>
+                                    <option value="Teto / Volante / Portas">Teto / Volante / Portas</option>
+                                    <option value="Higienização e Hidratação">Higienização e Hidratação</option>
+                                    <option value="Outros Serviços">Outros Serviços</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-gray-300 mb-1" for="mensagem">Detalhes do Serviço</label>
+                            <textarea id="mensagem" rows="3" placeholder="Descreva brevemente o que precisa ser feito..." class="w-full bg-brandDark border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brandRed transition"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full bg-brandRed hover:bg-brandRedDark text-white font-heading font-bold py-4 rounded-xl uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-xl"></i> Enviar Orçamento para o Danilo
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-black text-gray-400 py-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <p class="font-heading font-black text-xl italic text-white">
+                    <span class="text-brandRed">ESTOFF</span> CAR
+                </p>
+                <p class="text-xs text-gray-500 mt-1">Estofaria Automotiva de Alta Qualidade • Curitiba / PR</p>
+            </div>
+
+            <div class="flex space-x-6 text-sm">
+                <a href="https://wa.me/5541999757153" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp text-lg"></i></a>
+                <a href="https://www.instagram.com/estoffcar/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fa-brands fa-instagram text-lg"></i></a>
+                <a href="https://www.facebook.com/daniloestoffcar/?locale=pt_BR" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fa-brands fa-facebook-f text-lg"></i></a>
+            </div>
+
+            <p class="text-xs text-gray-600">
+                &copy; Estoff Car. Todos os direitos reservados. Responsável: Danilo.
+            </p>
+        </div>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE DO WHATSAPP NO CANTO INFERIOR DIREITO -->
+    <a href="https://wa.me/5541999757153?text=Olá%20Danilo,%20vi%20o%20site%20da%20Estoff%20Car%20e%20gostaria%20de%20um%20orçamento!" target="_blank" aria-label="Contato direto pelo WhatsApp" class="fixed bottom-6 right-6 bg-green-600 hover:bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-50 hover:scale-110 transition duration-300">
+        <i class="fa-brands fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- SCRIPTS INTERATIVOS -->
+    <script>
+        // Toggle Menu Mobile
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Interactive Before/After Slider Logic
+        const container = document.getElementById('interactive-slider');
+        const beforeImg = document.getElementById('before-img');
+        const handle = document.getElementById('slider-handle');
+
+        let isDown = false;
+
+        const moveSlider = (x) => {
+            const rect = container.getBoundingClientRect();
+            let position = x - rect.left;
+            
+            if (position < 0) position = 0;
+            if (position > rect.width) position = rect.width;
+
+            const percentage = (position / rect.width) * 100;
+            beforeImg.style.width = `${percentage}%`;
+            handle.style.left = `${percentage}%`;
+        };
+
+        container.addEventListener('mousedown', () => isDown = true);
+        window.addEventListener('mouseup', () => isDown = false);
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            moveSlider(e.clientX);
+        });
+
+        // Touch support for Mobile
+        container.addEventListener('touchstart', () => isDown = true);
+        window.addEventListener('touchend', () => isDown = false);
+        container.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            moveSlider(e.touches[0].clientX);
+        });
+
+        // Envios de Formulário Direto para WhatsApp
+        document.getElementById('whatsapp-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nome = document.getElementById('nome').value;
+            const modelo = document.getElementById('modelo').value;
+            const servico = document.getElementById('servico').value;
+            const mensagem = document.getElementById('mensagem').value;
+
+            const textoWhatsApp = `Olá Danilo! Me chamo *${nome}*.%0A*Carro:* ${modelo}%0A*Serviço:* ${servico}%0A*Detalhes:* ${mensagem}`;
+            window.open(`https://wa.me/5541999757153?text=${textoWhatsApp}`, '_blank');
+        });
+    </script>
+</body>
+</html>
