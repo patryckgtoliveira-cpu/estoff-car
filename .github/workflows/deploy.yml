@@ -27,7 +27,8 @@ jobs:
           fi
 
           curl --fail-with-body --show-error --silent \
-              --request GET \
+              --request POST \
+              --data '' \
               --write-out '\nHTTP %{http_code} in %{time_total}s\n' \
               --max-time 30 \
               --retry 5 \
