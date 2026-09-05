@@ -1,0 +1,37 @@
+name: Trigger deploy
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Trigger deploy
+        env:
+          WEBHOOK_URL: ${{ secrets.PUSH_WEBHOOK }}
+          TOKEN: ${{ secrets.PUSH_TOKEN }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "$WEBHOOK_URL" ] || [ -z "$TOKEN" ]; then
+            echo "::error::PUSH_WEBHOOK and PUSH_TOKEN must both be set."
+            exit 1
+          fi
+
+          curl --fail-with-body --show-error --silent \
+              --request GET \
+              --write-out '\nHTTP %{http_code} in %{time_total}s\n' \
+              --max-time 30 \
+              --retry 5 \
+              --retry-connrefused \
+              --retry-max-time 120 \
+              --header "Authorization: Bearer $TOKEN" \
+              "$WEBHOOK_URL"
