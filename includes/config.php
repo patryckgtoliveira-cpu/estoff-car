@@ -67,6 +67,25 @@ function whatsapp(string $mensagem = ''): string
 }
 
 /**
+ * Monta o link do Google Maps com a rota até a oficina.
+ * Ao abrir, o Google já traça o caminho da localização atual do visitante
+ * até o endereço da Estoff Car.
+ *
+ * O destino sai de dados/site.php: usa a chave 'maps' se ela estiver
+ * preenchida, senão usa o próprio endereço.
+ */
+function maps(): string
+{
+    $destino = site('maps');
+
+    if (empty($destino)) {
+        $destino = site('endereco');
+    }
+
+    return 'https://www.google.com/maps/dir/?api=1&destination=' . rawurlencode($destino);
+}
+
+/**
  * Inclui um componente da pasta /componentes, opcionalmente passando dados.
  *
  * Uso: componente('card-servico', ['servico' => $servico])

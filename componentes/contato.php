@@ -3,22 +3,29 @@
  * COMPONENTE: Seção de contato (dados da oficina + formulário de orçamento).
  */
 
-// Os três blocos de informação exibidos à esquerda
+// Os três blocos de informação exibidos à esquerda.
+// A chave 'link' é opcional: quando preenchida, o valor vira um link clicavel.
 $informacoes = [
     [
         'icone'  => 'fa-solid fa-phone',
         'rotulo' => 'Telefone / WhatsApp',
         'valor'  => site('telefone'),
+        'link'   => 'tel:' . site('telefone_link'),
+        'dica'   => 'Ligar agora',
     ],
     [
         'icone'  => 'fa-solid fa-location-dot',
         'rotulo' => 'Localização',
         'valor'  => site('endereco'),
+        'link'   => maps(),
+        'dica'   => 'Ver como chegar no Google Maps',
     ],
     [
         'icone'  => 'fa-solid fa-user',
         'rotulo' => 'Atendimento Especializado',
         'valor'  => site('responsavel'),
+        'link'   => '',
+        'dica'   => '',
     ],
 ];
 ?>
@@ -49,7 +56,15 @@ $informacoes = [
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-400 font-semibold uppercase"><?= e($info['rotulo']) ?></p>
-                                    <p class="text-lg font-bold text-white"><?= e($info['valor']) ?></p>
+                                    <?php if ($info['link'] !== ''): ?>
+                                        <a href="<?= e($info['link']) ?>" title="<?= e($info['dica']) ?>"
+                                           <?= str_starts_with($info['link'], 'http') ? 'target="_blank" rel="noopener noreferrer"' : '' ?>
+                                           class="text-lg font-bold text-white hover:text-brandRed transition">
+                                            <?= e($info['valor']) ?>
+                                        </a>
+                                    <?php else: ?>
+                                        <p class="text-lg font-bold text-white"><?= e($info['valor']) ?></p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         <?php endforeach; ?>

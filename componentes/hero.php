@@ -40,9 +40,11 @@
                         <img src="imagem/local.jpeg" alt="Estofamento em couro automotivo premium - <?= e(site('nome')) ?>" class="w-full h-80 sm:h-96 object-cover transform group-hover:scale-105 transition duration-700">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
                         <div class="absolute bottom-4 left-4 right-4 flex justify-between items-end gap-2">
-                            <span class="bg-black/80 backdrop-blur-md border border-brandRed/30 px-3 py-1.5 rounded-lg text-xs font-semibold text-white">
+                            <a href="<?= e(maps()) ?>" target="_blank" rel="noopener noreferrer"
+                               title="Ver como chegar no Google Maps"
+                               class="bg-black/80 backdrop-blur-md border border-brandRed/30 hover:border-brandRed px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition hover:bg-black">
                                 <i class="fa-solid fa-location-dot text-brandRed mr-1"></i> <?= e(site('endereco')) ?>
-                            </span>
+                            </a>
                             <span class="bg-brandRed text-white px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider whitespace-nowrap">
                                 Atendimento <?= e(site('responsavel')) ?>
                             </span>

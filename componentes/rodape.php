@@ -10,7 +10,13 @@
                 <p class="font-heading font-black text-xl italic text-white">
                     <span class="text-brandRed">ESTOFF</span> CAR
                 </p>
-                <p class="text-xs text-gray-500 mt-1"><?= e(site('endereco')) ?> &bull; <?= e(site('cidade')) ?></p>
+                <p class="text-xs text-gray-500 mt-1">
+                    <a href="<?= e(maps()) ?>" target="_blank" rel="noopener noreferrer"
+                       title="Ver como chegar no Google Maps"
+                       class="hover:text-brandRed transition underline-offset-2 hover:underline">
+                        <?= e(site('endereco')) ?> &bull; <?= e(site('cidade')) ?>
+                    </a>
+                </p>
             </div>
 
             <?php componente('redes-sociais', ['variante' => 'rodape']); ?>

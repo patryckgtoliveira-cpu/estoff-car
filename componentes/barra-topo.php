@@ -7,7 +7,11 @@
     <div class="bg-black text-gray-300 py-2 px-4 border-b border-gray-800 text-sm">
         <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
             <div class="flex items-center space-x-4 text-xs md:text-sm">
-                <span><i class="fa-solid fa-location-dot text-brandRed mr-1"></i> <?= e(site('endereco')) ?></span>
+                <a href="<?= e(maps()) ?>" target="_blank" rel="noopener noreferrer"
+                   title="Ver como chegar no Google Maps"
+                   class="hover:text-brandRed transition underline-offset-2 hover:underline">
+                    <i class="fa-solid fa-location-dot text-brandRed mr-1"></i> <?= e(site('endereco')) ?>
+                </a>
                 <span><i class="fa-solid fa-user text-brandRed mr-1"></i> Contato: <strong><?= e(site('responsavel')) ?></strong></span>
             </div>
             <div class="flex items-center space-x-4 text-xs md:text-sm">
