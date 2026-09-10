@@ -110,20 +110,13 @@ html {
 }
 
 .galeria-card:hover .galeria-card-acao,
-.galeria-card:focus-visible .galeria-card-acao,
-.galeria-card.is-selecionado .galeria-card-acao {
+.galeria-card:focus-visible .galeria-card-acao {
     opacity: 1;
 }
 
-/* Card escolhido no momento */
-.galeria-card.is-selecionado {
-    border-color: #FF2A2A;
-    box-shadow: 0 0 0 1px #FF2A2A, 0 10px 30px rgba(255, 42, 42, 0.15);
-}
-
-.galeria-card.is-selecionado .galeria-card-acao::after {
-    content: ' (aberto)';
-    font-weight: 400;
+/* Trabalho que esta ocupando o carrossel: sai da galeria ate ser substituido */
+.galeria-card.is-no-carrossel {
+    display: none;
 }
 
 /* No celular o texto de acao fica sempre visivel, pois nao existe hover */

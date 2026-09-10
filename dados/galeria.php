@@ -4,9 +4,22 @@
  *
  * classe_antes -> classes extras aplicadas só na foto do antes
  *                 (ex.: "filter grayscale" para deixar em preto e branco)
+ *
+ * >>> O PRIMEIRO item da lista é o que já abre dentro do carrossel grande. <<<
+ * Ao clicar em outro trabalho, eles trocam de lugar: o novo sobe para o
+ * carrossel e o anterior volta para a galeria aqui embaixo.
  */
 
 return [
+    [
+        'antes'        => 'imagem/banco antes.jpeg',
+        'antes_alt'    => 'Banco com tecido e espuma desgastados',
+        'classe_antes' => '',
+        'depois'       => 'imagem/banco depois.jpeg',
+        'depois_alt'   => 'Banco com tecido e espuma novos',
+        'titulo'       => 'Troca de Tecido e Espuma do Banco',
+        'descricao'    => 'Substituição do tecido gasto e da espuma, devolvendo firmeza e acabamento de origem.',
+    ],
     [
         'antes'        => 'imagem/couro rasgado .jpeg',
         'antes_alt'    => 'Banco com rasgo e desgaste',

@@ -1,29 +1,25 @@
 <?php
 /**
- * Imagens do carrossel Antes / Depois.
+ * Configuração das duas telas do carrossel Antes / Depois.
  *
- * As imagens se alternam sozinhas a cada 3 segundos (e também podem ser
- * arrastadas para os lados). Pode ter mais de duas: o carrossel cria uma
- * bolinha indicadora para cada item automaticamente.
+ * As FOTOS não ficam mais aqui: elas vêm de /dados/galeria.php (o primeiro
+ * item da lista é o que abre no carrossel). Este arquivo define apenas como
+ * cada tag aparece.
  *
+ * papel -> 'antes' ou 'depois'; diz de qual foto do trabalho a tela usa
+ * tag   -> texto exibido no canto da imagem
  * cor   -> classe de cor da tag (bg-brandRed = vermelho, bg-green-600 = verde)
- * papel -> 'antes' ou 'depois'. É por ele que o JavaScript sabe qual imagem
- *          trocar quando o visitante clica num card da galeria abaixo.
  */
 
 return [
     [
-        'imagem' => 'imagem/banco antes.jpeg',
-        'alt'    => 'Antes do serviço de reforma',
-        'tag'    => 'ANTES (DESGASTADO)',
-        'cor'    => 'bg-brandRed',
-        'papel'  => 'antes',
+        'papel' => 'antes',
+        'tag'   => 'ANTES (DESGASTADO)',
+        'cor'   => 'bg-brandRed',
     ],
     [
-        'imagem' => 'imagem/banco depois.jpeg',
-        'alt'    => 'Depois do serviço da Estoff Car',
-        'tag'    => 'DEPOIS (NOVO)',
-        'cor'    => 'bg-green-600',
-        'papel'  => 'depois',
+        'papel' => 'depois',
+        'tag'   => 'DEPOIS (NOVO)',
+        'cor'   => 'bg-green-600',
     ],
 ];

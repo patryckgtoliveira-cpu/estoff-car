@@ -6,10 +6,15 @@
  * O card é um botão: ao ser clicado, o js/script.js lê os data-* abaixo e
  * carrega essas mesmas fotos no carrossel grande, que fica alternando entre
  * elas até o visitante escolher outro trabalho.
+ *
+ * $no_carrossel = true significa que este trabalho esta ocupando o carrossel
+ * neste momento, entao o card fica oculto ate outro trabalho tomar o lugar.
  */
+
+$no_carrossel = $no_carrossel ?? false;
 ?>
                 <button type="button"
-                        class="galeria-card bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800 w-full text-left transition hover:border-brandRed/60 focus:outline-none focus:ring-2 focus:ring-brandRed"
+                        class="galeria-card<?= $no_carrossel ? ' is-no-carrossel' : '' ?> bg-brandGrayCard rounded-xl overflow-hidden border border-gray-800 w-full text-left transition hover:border-brandRed/60 focus:outline-none focus:ring-2 focus:ring-brandRed"
                         data-galeria
                         data-titulo="<?= e($exemplo['titulo']) ?>"
                         data-antes="<?= e($exemplo['antes']) ?>"

@@ -4,8 +4,9 @@
  * Imagens do carrossel: /dados/carrossel.php   |   Galeria: /dados/galeria.php
  */
 
-$slides  = dados('carrossel');
-$galeria = dados('galeria');
+$papeis  = dados('carrossel');   // como as tags ANTES/DEPOIS aparecem
+$galeria = dados('galeria');     // todos os trabalhos
+$atual   = $galeria[0];          // o primeiro é o que abre no carrossel
 ?>
     <!-- SEÇÃO ANTES E DEPOIS (CARROSSEL + GALERIA) -->
     <section id="antes-depois" class="py-16 bg-brandDark border-t border-b border-gray-800">
@@ -21,23 +22,28 @@ $galeria = dados('galeria');
             <div class="max-w-4xl mx-auto mb-12 text-center">
                 <div class="carousel rounded-2xl overflow-hidden shadow-2xl border-2 border-brandRed/30" id="antes-depois-carousel">
 
-                    <?php foreach ($slides as $indice => $slide): ?>
-                        <div class="carousel-slide<?= $indice === 0 ? ' is-active' : '' ?>" data-slide data-papel="<?= e($slide['papel']) ?>">
-                            <img src="<?= e($slide['imagem']) ?>" alt="<?= e($slide['alt']) ?>" class="w-full h-full object-contain">
-                            <span class="absolute top-4 left-4 <?= e($slide['cor']) ?> text-white text-xs font-bold px-3 py-1 rounded-md shadow"><?= e($slide['tag']) ?></span>
+                    <?php foreach ($papeis as $indice => $papel): ?>
+                        <?php
+                        // 'antes' usa antes/antes_alt; 'depois' usa depois/depois_alt
+                        $chave  = $papel['papel'];
+                        $extra  = $chave === 'antes' ? $atual['classe_antes'] : '';
+                        ?>
+                        <div class="carousel-slide<?= $indice === 0 ? ' is-active' : '' ?>" data-slide data-papel="<?= e($chave) ?>">
+                            <img src="<?= e($atual[$chave]) ?>" alt="<?= e($atual[$chave . '_alt']) ?>" class="w-full h-full object-contain <?= e($extra) ?>">
+                            <span class="absolute top-4 left-4 <?= e($papel['cor']) ?> text-white text-xs font-bold px-3 py-1 rounded-md shadow"><?= e($papel['tag']) ?></span>
                         </div>
                     <?php endforeach; ?>
 
                     <!-- INDICADORES (uma bolinha para cada imagem) -->
                     <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
-                        <?php foreach ($slides as $indice => $slide): ?>
-                            <button type="button" class="carousel-dot<?= $indice === 0 ? ' is-active' : '' ?>" data-dot aria-label="Ver a imagem: <?= e($slide['tag']) ?>"></button>
+                        <?php foreach ($papeis as $indice => $papel): ?>
+                            <button type="button" class="carousel-dot<?= $indice === 0 ? ' is-active' : '' ?>" data-dot aria-label="Ver a imagem: <?= e($papel['tag']) ?>"></button>
                         <?php endforeach; ?>
                     </div>
                 </div>
                 <p class="text-center text-xs text-gray-500 mt-2">
                     <i class="fa-solid fa-hand-pointer mr-1"></i>
-                    <span id="carrossel-legenda">Arraste para os lados ou aguarde: as imagens alternam a cada 3 segundos</span>
+                    <span id="carrossel-legenda"><?= e($atual['titulo']) ?> &mdash; arraste para os lados ou aguarde: as imagens alternam a cada 3 segundos</span>
                 </p>
             </div>
 
@@ -47,8 +53,12 @@ $galeria = dados('galeria');
                 Clique em um trabalho abaixo para vê-lo em tamanho grande no carrossel
             </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <?php foreach ($galeria as $exemplo): ?>
-                    <?php componente('card-galeria', ['exemplo' => $exemplo]); ?>
+                <?php foreach ($galeria as $indice => $exemplo): ?>
+                    <?php // o item que esta no carrossel sai da galeria; volta quando outro for escolhido ?>
+                    <?php componente('card-galeria', [
+                        'exemplo'      => $exemplo,
+                        'no_carrossel' => $indice === 0,
+                    ]); ?>
                 <?php endforeach; ?>
             </div>
         </div>

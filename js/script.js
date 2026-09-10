@@ -95,26 +95,12 @@ if (carrossel) {
     });
 
     // ----------------------------------------------------------------------
-    // Cards da galeria: ao clicar em um trabalho, as fotos dele entram no
-    // carrossel e ficam alternando ali até o visitante escolher outro.
+    // Galeria: clicar num trabalho o traz para o carrossel, e o que estava
+    // no carrossel volta para a galeria, ocupando o lugar dele.
     // ----------------------------------------------------------------------
     const cards = document.querySelectorAll('[data-galeria]');
     const legenda = document.getElementById('carrossel-legenda');
     const CLASSE_BASE = 'w-full h-full object-contain';
-
-    // Guarda as fotos originais para poder voltar a elas ao clicar de novo
-    // no mesmo card (funciona como um "desfazer").
-    const original = {};
-    slides.forEach((slide) => {
-        const img = slide.querySelector('img');
-        original[slide.dataset.papel] = {
-            src: img.getAttribute('src'),
-            alt: img.getAttribute('alt'),
-            classe: img.className
-        };
-    });
-
-    const legendaPadrao = legenda ? legenda.textContent : '';
 
     // Mede a foto do "antes" e informa a proporcao dela ao CSS, pela variavel
     // --proporcao. O CSS mantem a ALTURA fixa e calcula a largura a partir
@@ -152,50 +138,26 @@ if (carrossel) {
         img.className = classeExtra ? `${CLASSE_BASE} ${classeExtra}` : CLASSE_BASE;
     };
 
-    const voltarAoOriginal = () => {
-        Object.keys(original).forEach((papel) => {
-            const foto = original[papel];
-            const slide = carrossel.querySelector(`[data-papel="${papel}"]`);
-            if (!slide) return;
-
-            const img = slide.querySelector('img');
-            img.setAttribute('src', foto.src);
-            img.setAttribute('alt', foto.alt);
-            img.className = foto.classe;
-        });
-
-        if (legenda) legenda.textContent = legendaPadrao;
-
-        ajustarAspecto();
-    };
-
     cards.forEach((card) => {
         card.addEventListener('click', () => {
-            const jaSelecionado = card.classList.contains('is-selecionado');
+            // Devolve para a galeria o trabalho que estava no carrossel...
+            cards.forEach((outro) => outro.classList.remove('is-no-carrossel'));
+            // ...e tira da galeria o que acabou de subir para o carrossel
+            card.classList.add('is-no-carrossel');
 
-            // Tira o destaque de todos os cards
-            cards.forEach((outro) => outro.classList.remove('is-selecionado'));
+            trocarFoto('antes', card.dataset.antes, card.dataset.antesAlt, card.dataset.antesClasse);
+            trocarFoto('depois', card.dataset.depois, card.dataset.depoisAlt, '');
+            ajustarAspecto();
 
-            if (jaSelecionado) {
-                // Clicou no card que já estava aberto: volta às fotos originais
-                voltarAoOriginal();
-            } else {
-                card.classList.add('is-selecionado');
-
-                trocarFoto('antes', card.dataset.antes, card.dataset.antesAlt, card.dataset.antesClasse);
-                trocarFoto('depois', card.dataset.depois, card.dataset.depoisAlt, '');
-                ajustarAspecto();
-
-                if (legenda) {
-                    legenda.textContent = `${card.dataset.titulo} — arraste para os lados ou aguarde a troca`;
-                }
+            if (legenda) {
+                legenda.textContent = `${card.dataset.titulo} — arraste para os lados ou aguarde: as imagens alternam a cada 3 segundos`;
             }
 
-            // Começa sempre pela foto do "antes" e reinicia a contagem
+            // Comeca sempre pela foto do "antes" e reinicia a contagem
             mostrarSlide(0);
             iniciarRotacao();
 
-            // Leva a tela até o carrossel, que fica acima da galeria
+            // Leva a tela ate o carrossel, que fica acima da galeria
             carrossel.scrollIntoView({ behavior: 'smooth', block: 'center' });
         });
     });
