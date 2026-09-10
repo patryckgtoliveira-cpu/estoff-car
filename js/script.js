@@ -10,39 +10,90 @@ btn.addEventListener('click', () => {
     menu.classList.toggle('hidden');
 });
 
-// Comparador Antes/Depois interativo
-const container = document.getElementById('interactive-slider');
-const beforeImg = document.getElementById('before-img');
-const handle = document.getElementById('slider-handle');
+// Carrossel Antes/Depois - alterna as imagens a cada 5 segundos
+const carrossel = document.getElementById('antes-depois-carousel');
 
-let isDown = false;
+if (carrossel) {
+    const slides = carrossel.querySelectorAll('[data-slide]');
+    const bolinhas = carrossel.querySelectorAll('[data-dot]');
+    const INTERVALO = 5000; // 5 segundos
 
-const moveSlider = (x) => {
-    const rect = container.getBoundingClientRect();
-    let position = x - rect.left;
+    let slideAtual = 0;
+    let temporizador;
 
-    if (position < 0) position = 0;
-    if (position > rect.width) position = rect.width;
+    const mostrarSlide = (indice) => {
+        slideAtual = (indice + slides.length) % slides.length;
+        slides.forEach((slide, i) => slide.classList.toggle('is-active', i === slideAtual));
+        bolinhas.forEach((bolinha, i) => bolinha.classList.toggle('is-active', i === slideAtual));
+    };
 
-    const percentage = (position / rect.width) * 100;
-    beforeImg.style.width = `${percentage}%`;
-    handle.style.left = `${percentage}%`;
-};
+    const iniciarRotacao = () => {
+        clearInterval(temporizador);
+        temporizador = setInterval(() => mostrarSlide(slideAtual + 1), INTERVALO);
+    };
 
-container.addEventListener('mousedown', () => isDown = true);
-window.addEventListener('mouseup', () => isDown = false);
-container.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    moveSlider(e.clientX);
-});
+    // Clique nas bolinhas salta para a imagem escolhida e reinicia a contagem
+    bolinhas.forEach((bolinha, i) => {
+        bolinha.addEventListener('click', () => {
+            mostrarSlide(i);
+            iniciarRotacao();
+        });
+    });
 
-// Suporte a toque no mobile
-container.addEventListener('touchstart', () => isDown = true);
-window.addEventListener('touchend', () => isDown = false);
-container.addEventListener('touchmove', (e) => {
-    if (!isDown) return;
-    moveSlider(e.touches[0].clientX);
-});
+    // Arraste para os lados (mouse, toque e caneta) para trocar de imagem
+    const LIMIAR = 60; // distância mínima em pixels para valer a troca
+
+    let arrastando = false;
+    let xInicial = 0;
+    let deslocamento = 0;
+
+    carrossel.addEventListener('pointerdown', (e) => {
+        if (e.target.closest('[data-dot]')) return; // clique nas bolinhas não é arraste
+
+        arrastando = true;
+        xInicial = e.clientX;
+        deslocamento = 0;
+
+        clearInterval(temporizador);
+        carrossel.classList.add('is-dragging');
+        carrossel.setPointerCapture(e.pointerId);
+    });
+
+    carrossel.addEventListener('pointermove', (e) => {
+        if (!arrastando) return;
+
+        deslocamento = e.clientX - xInicial;
+        // acompanha o dedo/mouse de forma suave, sem sair do lugar
+        slides[slideAtual].style.transform = `translateX(${deslocamento * 0.4}px)`;
+    });
+
+    const finalizarArraste = () => {
+        if (!arrastando) return;
+
+        arrastando = false;
+        carrossel.classList.remove('is-dragging');
+        slides[slideAtual].style.transform = '';
+
+        // arrastou para a esquerda avança, para a direita volta
+        if (Math.abs(deslocamento) > LIMIAR) {
+            mostrarSlide(slideAtual + (deslocamento < 0 ? 1 : -1));
+        }
+
+        deslocamento = 0;
+        iniciarRotacao();
+    };
+
+    carrossel.addEventListener('pointerup', finalizarArraste);
+    carrossel.addEventListener('pointercancel', finalizarArraste);
+
+    // Pausa enquanto o visitante está com o mouse sobre a imagem
+    carrossel.addEventListener('mouseenter', () => clearInterval(temporizador));
+    carrossel.addEventListener('mouseleave', () => {
+        if (!arrastando) iniciarRotacao();
+    });
+
+    iniciarRotacao();
+}
 
 // Envio do formulário direto para o WhatsApp
 document.getElementById('whatsapp-form').addEventListener('submit', function (e) {

@@ -288,31 +288,33 @@
             <div class="text-center max-w-3xl mx-auto mb-12">
                 <h2 class="text-xs font-bold text-brandRed uppercase tracking-widest mb-2">Comprovação de Qualidade</h2>
                 <p class="font-heading font-black text-3xl sm:text-4xl text-white uppercase italic">Trabalhos: Antes & Depois</p>
-                <p class="text-gray-400 mt-2 text-sm">Arraste o divisor nas imagens para comparar a restauração feita pela Estoff Car.</p>
+                <p class="text-gray-400 mt-2 text-sm">Veja a transformação feita pela Estoff Car: as imagens do antes e do depois se alternam sozinhas.</p>
                 <div class="w-20 h-1 bg-brandRed mx-auto mt-4 rounded-full"></div>
             </div>
 
-            <!-- COMPARADOR SLIDER INTERATIVO PRINCIPAL -->
+            <!-- CARROSSEL ANTES / DEPOIS (TROCA AUTOMÁTICA A CADA 5 SEGUNDOS) -->
             <div class="max-w-4xl mx-auto mb-12">
-                <div class="before-after-container rounded-2xl overflow-hidden shadow-2xl border-2 border-brandRed/30 h-80 sm:h-96" id="interactive-slider">
-                    <!-- Imagem DEPOIS (Fundo) -->
-                    <img src="imagem/banco depois.jpeg" alt="Depois do serviço da Estoff Car" class="w-full h-full object-cover">
-                    <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-md z-10 shadow">DEPOIS (NOVO)</span>
+                <div class="carousel rounded-2xl overflow-hidden shadow-2xl border-2 border-brandRed/30 h-80 sm:h-96" id="antes-depois-carousel">
 
-                    <!-- Imagem ANTES (Sobreposição com largura controlada) -->
-                    <div class="before-image" id="before-img">
+                    <!-- SLIDE 1: ANTES -->
+                    <div class="carousel-slide is-active" data-slide>
                         <img src="imagem/banco antes.jpeg" alt="Antes do serviço de reforma" class="w-full h-full object-cover">
                         <span class="absolute top-4 left-4 bg-brandRed text-white text-xs font-bold px-3 py-1 rounded-md shadow">ANTES (DESGASTADO)</span>
                     </div>
 
-                    <!-- Divisor e Botão de Arraste -->
-                    <div class="slider-handle" id="slider-handle">
-                        <div class="slider-button">
-                            <i class="fa-solid fa-arrows-left-right text-xs"></i>
-                        </div>
+                    <!-- SLIDE 2: DEPOIS -->
+                    <div class="carousel-slide" data-slide>
+                        <img src="imagem/banco depois.jpeg" alt="Depois do serviço da Estoff Car" class="w-full h-full object-cover">
+                        <span class="absolute top-4 left-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-md shadow">DEPOIS (NOVO)</span>
+                    </div>
+
+                    <!-- INDICADORES -->
+                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+                        <button type="button" class="carousel-dot is-active" data-dot aria-label="Ver a imagem do antes"></button>
+                        <button type="button" class="carousel-dot" data-dot aria-label="Ver a imagem do depois"></button>
                     </div>
                 </div>
-                <p class="text-center text-xs text-gray-500 mt-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Arraste para os lados para ver a transformação</p>
+                <p class="text-center text-xs text-gray-500 mt-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Arraste para os lados ou aguarde: as imagens alternam a cada 5 segundos</p>
             </div>
 
             <!-- GALERIA ADICIONAL DE EXEMPLOS -->

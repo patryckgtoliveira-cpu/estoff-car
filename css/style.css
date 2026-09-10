@@ -3,54 +3,75 @@
    (o restante do layout usa as classes utilitárias do Tailwind via CDN)
    ========================================================================== */
 
-/* Comparador Antes/Depois */
-.before-after-container {
+/* Carrossel Antes/Depois */
+.carousel {
     position: relative;
     overflow: hidden;
+    background-color: #0D0D0D;
+    cursor: grab;
     user-select: none;
+    -webkit-user-select: none;
+    /* permite rolar a página na vertical, mas reserva o arraste horizontal */
+    touch-action: pan-y;
 }
 
-.before-image {
+/* Enquanto o visitante arrasta: cursor de "mão fechada" e sem transição atrasando */
+.carousel.is-dragging {
+    cursor: grabbing;
+}
+
+.carousel.is-dragging .carousel-slide {
+    transition: none;
+}
+
+.carousel-slide {
     position: absolute;
     top: 0;
-    left: 0;
-    height: 100%;
-    width: 50%;
-    overflow: hidden;
-    border-right: 3px solid #FF2A2A;
-}
-
-.before-image img {
-    height: 100%;
-    max-width: none;
-}
-
-.slider-handle {
-    position: absolute;
-    top: 0;
+    right: 0;
     bottom: 0;
-    left: 50%;
-    width: 4px;
-    background-color: #FF2A2A;
-    cursor: ew-resize;
-    transform: translateX(-50%);
-    z-index: 10;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s, transform 0.35s ease;
 }
 
-.slider-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 36px;
-    height: 36px;
+.carousel-slide.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Impede o "fantasma" de arrastar imagem do navegador */
+.carousel-slide img {
+    pointer-events: none;
+    -webkit-user-drag: none;
+}
+
+/* Bolinhas indicadoras */
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.carousel-dot:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.carousel-dot.is-active {
+    width: 28px;
     background-color: #FF2A2A;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+    .carousel-slide {
+        transition: none;
+    }
 }
 
 /* Rolagem suave nos links âncora do menu */
