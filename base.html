@@ -10,75 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandRed: '#FF2A2A',
-                        brandRedDark: '#CC0000',
-                        brandDark: '#0D0D0D',
-                        brandGrayDark: '#1A1A1A',
-                        brandGrayCard: '#242424',
-                    },
-                    fontFamily: {
-                        sans: ['Roboto', 'sans-serif'],
-                        heading: ['Montserrat', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Custom Styles for Before/After Slider */
-        .before-after-container {
-            position: relative;
-            overflow: hidden;
-            user-select: none;
-        }
-        .before-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 50%;
-            overflow: hidden;
-            border-right: 3px solid #FF2A2A;
-        }
-        .before-image img {
-            height: 100%;
-            max-width: none;
-        }
-        .slider-handle {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            width: 4px;
-            background-color: #FF2A2A;
-            cursor: ew-resize;
-            transform: translateX(-50%);
-            z-index: 10;
-        }
-        .slider-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 36px;
-            height: 36px;
-            background-color: #FF2A2A;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-    </style>
+    <!-- Configuração de tema do Tailwind -->
+    <script src="js/tailwind-config.js"></script>
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-brandDark text-gray-100 font-sans antialiased">
 
@@ -578,60 +513,6 @@
     </a>
 
     <!-- SCRIPTS INTERATIVOS -->
-    <script>
-        // Toggle Menu Mobile
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
-        // Interactive Before/After Slider Logic
-        const container = document.getElementById('interactive-slider');
-        const beforeImg = document.getElementById('before-img');
-        const handle = document.getElementById('slider-handle');
-
-        let isDown = false;
-
-        const moveSlider = (x) => {
-            const rect = container.getBoundingClientRect();
-            let position = x - rect.left;
-            
-            if (position < 0) position = 0;
-            if (position > rect.width) position = rect.width;
-
-            const percentage = (position / rect.width) * 100;
-            beforeImg.style.width = `${percentage}%`;
-            handle.style.left = `${percentage}%`;
-        };
-
-        container.addEventListener('mousedown', () => isDown = true);
-        window.addEventListener('mouseup', () => isDown = false);
-        container.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            moveSlider(e.clientX);
-        });
-
-        // Touch support for Mobile
-        container.addEventListener('touchstart', () => isDown = true);
-        window.addEventListener('touchend', () => isDown = false);
-        container.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
-            moveSlider(e.touches[0].clientX);
-        });
-
-        // Envios de Formulário Direto para WhatsApp
-        document.getElementById('whatsapp-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const nome = document.getElementById('nome').value;
-            const modelo = document.getElementById('modelo').value;
-            const servico = document.getElementById('servico').value;
-            const mensagem = document.getElementById('mensagem').value;
-
-            const textoWhatsApp = `Olá Danilo! Me chamo *${nome}*.%0A*Carro:* ${modelo}%0A*Serviço:* ${servico}%0A*Detalhes:* ${mensagem}`;
-            window.open(`https://wa.me/5541999757153?text=${textoWhatsApp}`, '_blank');
-        });
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,59 @@
+/* ==========================================================================
+   Estoff Car - Estilos personalizados
+   (o restante do layout usa as classes utilitárias do Tailwind via CDN)
+   ========================================================================== */
+
+/* Comparador Antes/Depois */
+.before-after-container {
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
+
+.before-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 50%;
+    overflow: hidden;
+    border-right: 3px solid #FF2A2A;
+}
+
+.before-image img {
+    height: 100%;
+    max-width: none;
+}
+
+.slider-handle {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    background-color: #FF2A2A;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background-color: #FF2A2A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Rolagem suave nos links âncora do menu */
+html {
+    scroll-behavior: smooth;
+}
