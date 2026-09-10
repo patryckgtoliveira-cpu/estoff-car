@@ -35,7 +35,7 @@ $galeria = dados('galeria');
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <p class="text-center text-xs text-gray-500 mt-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Arraste para os lados ou aguarde: as imagens alternam a cada 5 segundos</p>
+                <p class="text-center text-xs text-gray-500 mt-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Arraste para os lados ou aguarde: as imagens alternam a cada 3 segundos</p>
             </div>
 
             <!-- GALERIA ADICIONAL DE EXEMPLOS -->

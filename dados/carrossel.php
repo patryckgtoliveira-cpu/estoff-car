@@ -2,7 +2,7 @@
 /**
  * Imagens do carrossel Antes / Depois.
  *
- * As imagens se alternam sozinhas a cada 5 segundos (e também podem ser
+ * As imagens se alternam sozinhas a cada 3 segundos (e também podem ser
  * arrastadas para os lados). Pode ter mais de duas: o carrossel cria uma
  * bolinha indicadora para cada item automaticamente.
  *

@@ -12,13 +12,13 @@ if (btn && menu) {
     });
 }
 
-// Carrossel Antes/Depois - alterna as imagens a cada 5 segundos
+// Carrossel Antes/Depois - alterna as imagens a cada 3 segundos
 const carrossel = document.getElementById('antes-depois-carousel');
 
 if (carrossel) {
     const slides = carrossel.querySelectorAll('[data-slide]');
     const bolinhas = carrossel.querySelectorAll('[data-dot]');
-    const INTERVALO = 5000; // 5 segundos
+    const INTERVALO = 3000; // 3 segundos
 
     let slideAtual = 0;
     let temporizador;
