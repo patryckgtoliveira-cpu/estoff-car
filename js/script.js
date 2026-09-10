@@ -6,9 +6,11 @@
 const btn = document.getElementById('mobile-menu-btn');
 const menu = document.getElementById('mobile-menu');
 
-btn.addEventListener('click', () => {
-    menu.classList.toggle('hidden');
-});
+if (btn && menu) {
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+}
 
 // Carrossel Antes/Depois - alterna as imagens a cada 5 segundos
 const carrossel = document.getElementById('antes-depois-carousel');
@@ -96,13 +98,24 @@ if (carrossel) {
 }
 
 // Envio do formulário direto para o WhatsApp
-document.getElementById('whatsapp-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const nome = document.getElementById('nome').value;
-    const modelo = document.getElementById('modelo').value;
-    const servico = document.getElementById('servico').value;
-    const mensagem = document.getElementById('mensagem').value;
+// O número e o nome do responsável vêm do próprio formulário (data-whatsapp
+// e data-responsavel), que o PHP preenche a partir de /dados/site.php.
+const formulario = document.getElementById('whatsapp-form');
 
-    const textoWhatsApp = `Olá Danilo! Me chamo *${nome}*.%0A*Carro:* ${modelo}%0A*Serviço:* ${servico}%0A*Detalhes:* ${mensagem}`;
-    window.open(`https://wa.me/5541999757153?text=${textoWhatsApp}`, '_blank');
-});
+if (formulario) {
+    formulario.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const numero = formulario.dataset.whatsapp || '5541999757153';
+        const responsavel = formulario.dataset.responsavel || 'Danilo';
+
+        const nome = document.getElementById('nome').value;
+        const modelo = document.getElementById('modelo').value;
+        const servico = document.getElementById('servico').value;
+        const mensagem = document.getElementById('mensagem').value;
+
+        const texto = `Olá ${responsavel}! Me chamo *${nome}*.\n*Carro:* ${modelo}\n*Serviço:* ${servico}\n*Detalhes:* ${mensagem}`;
+
+        window.open(`https://wa.me/${numero}?text=${encodeURIComponent(texto)}`, '_blank');
+    });
+}
