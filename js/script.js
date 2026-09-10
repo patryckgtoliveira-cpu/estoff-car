@@ -94,6 +94,113 @@ if (carrossel) {
         if (!arrastando) iniciarRotacao();
     });
 
+    // ----------------------------------------------------------------------
+    // Cards da galeria: ao clicar em um trabalho, as fotos dele entram no
+    // carrossel e ficam alternando ali até o visitante escolher outro.
+    // ----------------------------------------------------------------------
+    const cards = document.querySelectorAll('[data-galeria]');
+    const legenda = document.getElementById('carrossel-legenda');
+    const CLASSE_BASE = 'w-full h-full object-contain';
+
+    // Guarda as fotos originais para poder voltar a elas ao clicar de novo
+    // no mesmo card (funciona como um "desfazer").
+    const original = {};
+    slides.forEach((slide) => {
+        const img = slide.querySelector('img');
+        original[slide.dataset.papel] = {
+            src: img.getAttribute('src'),
+            alt: img.getAttribute('alt'),
+            classe: img.className
+        };
+    });
+
+    const legendaPadrao = legenda ? legenda.textContent : '';
+
+    // Mede a foto do "antes" e informa a proporcao dela ao CSS, pela variavel
+    // --proporcao. O CSS mantem a ALTURA fixa e calcula a largura a partir
+    // dessa proporcao, entao a imagem encaixa exata: nao corta nem sobra fundo.
+    const ajustarAspecto = () => {
+        const slideAntes = carrossel.querySelector('[data-papel="antes"]') || slides[0];
+        if (!slideAntes) return;
+
+        const img = slideAntes.querySelector('img');
+        if (!img) return;
+
+        const aplicar = () => {
+            if (img.naturalWidth && img.naturalHeight) {
+                const proporcao = img.naturalWidth / img.naturalHeight;
+                carrossel.style.setProperty('--proporcao', proporcao.toFixed(4));
+            }
+        };
+
+        // Se a foto ja terminou de carregar, mede na hora; senao, espera o load
+        if (img.complete) {
+            aplicar();
+        } else {
+            img.addEventListener('load', aplicar, { once: true });
+        }
+    };
+
+    // Troca a foto de um dos slides (o do 'antes' ou o do 'depois')
+    const trocarFoto = (papel, src, alt, classeExtra) => {
+        const slide = carrossel.querySelector(`[data-papel="${papel}"]`);
+        if (!slide) return;
+
+        const img = slide.querySelector('img');
+        img.setAttribute('src', src);
+        img.setAttribute('alt', alt);
+        img.className = classeExtra ? `${CLASSE_BASE} ${classeExtra}` : CLASSE_BASE;
+    };
+
+    const voltarAoOriginal = () => {
+        Object.keys(original).forEach((papel) => {
+            const foto = original[papel];
+            const slide = carrossel.querySelector(`[data-papel="${papel}"]`);
+            if (!slide) return;
+
+            const img = slide.querySelector('img');
+            img.setAttribute('src', foto.src);
+            img.setAttribute('alt', foto.alt);
+            img.className = foto.classe;
+        });
+
+        if (legenda) legenda.textContent = legendaPadrao;
+
+        ajustarAspecto();
+    };
+
+    cards.forEach((card) => {
+        card.addEventListener('click', () => {
+            const jaSelecionado = card.classList.contains('is-selecionado');
+
+            // Tira o destaque de todos os cards
+            cards.forEach((outro) => outro.classList.remove('is-selecionado'));
+
+            if (jaSelecionado) {
+                // Clicou no card que já estava aberto: volta às fotos originais
+                voltarAoOriginal();
+            } else {
+                card.classList.add('is-selecionado');
+
+                trocarFoto('antes', card.dataset.antes, card.dataset.antesAlt, card.dataset.antesClasse);
+                trocarFoto('depois', card.dataset.depois, card.dataset.depoisAlt, '');
+                ajustarAspecto();
+
+                if (legenda) {
+                    legenda.textContent = `${card.dataset.titulo} — arraste para os lados ou aguarde a troca`;
+                }
+            }
+
+            // Começa sempre pela foto do "antes" e reinicia a contagem
+            mostrarSlide(0);
+            iniciarRotacao();
+
+            // Leva a tela até o carrossel, que fica acima da galeria
+            carrossel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    });
+
+    ajustarAspecto();
     iniciarRotacao();
 }
 

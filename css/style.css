@@ -5,15 +5,32 @@
 
 /* Carrossel Antes/Depois */
 .carousel {
+    /* Proporcao da foto (largura / altura). O JavaScript troca este valor
+       assim que a imagem carrega. 1.7778 = 16/9, so vale enquanto carrega. */
+    --proporcao: 1.7778;
+
+    /* ALTURA FIXA. A largura sai da proporcao da foto, entao a imagem
+       encaixa perfeitamente: sem corte e sem faixa preta nas laterais. */
+    height: min(540px, calc(min(896px, 100vw - 3rem) / var(--proporcao)));
+    aspect-ratio: var(--proporcao);
+    width: auto;
+    max-width: 100%;
+
+    /* inline-block e o que permite a largura seguir a altura */
+    display: inline-block;
+    vertical-align: top;
+
     position: relative;
     overflow: hidden;
     background-color: #0D0D0D;
     cursor: grab;
+    transition: height 0.35s ease, aspect-ratio 0.35s ease;
     user-select: none;
     -webkit-user-select: none;
     /* permite rolar a página na vertical, mas reserva o arraste horizontal */
     touch-action: pan-y;
 }
+
 
 /* Enquanto o visitante arrasta: cursor de "mão fechada" e sem transição atrasando */
 .carousel.is-dragging {
@@ -77,4 +94,41 @@
 /* Rolagem suave nos links âncora do menu */
 html {
     scroll-behavior: smooth;
+}
+
+/* ==========================================================================
+   Cards da galeria (clicaveis: carregam suas fotos no carrossel)
+   ========================================================================== */
+.galeria-card {
+    cursor: pointer;
+}
+
+/* "Ver no carrossel" so aparece quando o mouse passa por cima ou o card esta ativo */
+.galeria-card-acao {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.galeria-card:hover .galeria-card-acao,
+.galeria-card:focus-visible .galeria-card-acao,
+.galeria-card.is-selecionado .galeria-card-acao {
+    opacity: 1;
+}
+
+/* Card escolhido no momento */
+.galeria-card.is-selecionado {
+    border-color: #FF2A2A;
+    box-shadow: 0 0 0 1px #FF2A2A, 0 10px 30px rgba(255, 42, 42, 0.15);
+}
+
+.galeria-card.is-selecionado .galeria-card-acao::after {
+    content: ' (aberto)';
+    font-weight: 400;
+}
+
+/* No celular o texto de acao fica sempre visivel, pois nao existe hover */
+@media (hover: none) {
+    .galeria-card-acao {
+        opacity: 1;
+    }
 }

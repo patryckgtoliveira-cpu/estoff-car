@@ -6,7 +6,9 @@
  * arrastadas para os lados). Pode ter mais de duas: o carrossel cria uma
  * bolinha indicadora para cada item automaticamente.
  *
- * cor -> classe de cor da tag (bg-brandRed = vermelho, bg-green-600 = verde)
+ * cor   -> classe de cor da tag (bg-brandRed = vermelho, bg-green-600 = verde)
+ * papel -> 'antes' ou 'depois'. É por ele que o JavaScript sabe qual imagem
+ *          trocar quando o visitante clica num card da galeria abaixo.
  */
 
 return [
@@ -15,11 +17,13 @@ return [
         'alt'    => 'Antes do serviço de reforma',
         'tag'    => 'ANTES (DESGASTADO)',
         'cor'    => 'bg-brandRed',
+        'papel'  => 'antes',
     ],
     [
         'imagem' => 'imagem/banco depois.jpeg',
         'alt'    => 'Depois do serviço da Estoff Car',
         'tag'    => 'DEPOIS (NOVO)',
         'cor'    => 'bg-green-600',
+        'papel'  => 'depois',
     ],
 ];

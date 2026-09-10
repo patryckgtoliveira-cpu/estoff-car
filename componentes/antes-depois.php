@@ -18,12 +18,12 @@ $galeria = dados('galeria');
             ]); ?>
 
             <!-- CARROSSEL ANTES / DEPOIS (TROCA AUTOMÁTICA A CADA 5 SEGUNDOS) -->
-            <div class="max-w-4xl mx-auto mb-12">
-                <div class="carousel rounded-2xl overflow-hidden shadow-2xl border-2 border-brandRed/30 h-80 sm:h-96" id="antes-depois-carousel">
+            <div class="max-w-4xl mx-auto mb-12 text-center">
+                <div class="carousel rounded-2xl overflow-hidden shadow-2xl border-2 border-brandRed/30" id="antes-depois-carousel">
 
                     <?php foreach ($slides as $indice => $slide): ?>
-                        <div class="carousel-slide<?= $indice === 0 ? ' is-active' : '' ?>" data-slide>
-                            <img src="<?= e($slide['imagem']) ?>" alt="<?= e($slide['alt']) ?>" class="w-full h-full object-cover">
+                        <div class="carousel-slide<?= $indice === 0 ? ' is-active' : '' ?>" data-slide data-papel="<?= e($slide['papel']) ?>">
+                            <img src="<?= e($slide['imagem']) ?>" alt="<?= e($slide['alt']) ?>" class="w-full h-full object-contain">
                             <span class="absolute top-4 left-4 <?= e($slide['cor']) ?> text-white text-xs font-bold px-3 py-1 rounded-md shadow"><?= e($slide['tag']) ?></span>
                         </div>
                     <?php endforeach; ?>
@@ -35,10 +35,17 @@ $galeria = dados('galeria');
                         <?php endforeach; ?>
                     </div>
                 </div>
-                <p class="text-center text-xs text-gray-500 mt-2"><i class="fa-solid fa-hand-pointer mr-1"></i> Arraste para os lados ou aguarde: as imagens alternam a cada 3 segundos</p>
+                <p class="text-center text-xs text-gray-500 mt-2">
+                    <i class="fa-solid fa-hand-pointer mr-1"></i>
+                    <span id="carrossel-legenda">Arraste para os lados ou aguarde: as imagens alternam a cada 3 segundos</span>
+                </p>
             </div>
 
-            <!-- GALERIA ADICIONAL DE EXEMPLOS -->
+            <!-- GALERIA ADICIONAL DE EXEMPLOS (clicaveis: trocam as fotos do carrossel) -->
+            <p class="text-center text-xs text-gray-400 mb-4">
+                <i class="fa-solid fa-arrow-pointer text-brandRed mr-1"></i>
+                Clique em um trabalho abaixo para vê-lo em tamanho grande no carrossel
+            </p>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <?php foreach ($galeria as $exemplo): ?>
                     <?php componente('card-galeria', ['exemplo' => $exemplo]); ?>
