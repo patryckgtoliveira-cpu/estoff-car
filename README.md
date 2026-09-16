@@ -148,3 +148,4 @@ Funções disponíveis em qualquer componente (definidas em `includes/config.php
 **O GitHub Pages não executa PHP** — ele só entrega arquivos estáticos. Para publicar esta
 versão é preciso uma hospedagem com suporte a PHP (Hostinger, Locaweb, InfinityFree,
 Railway, etc.), onde basta enviar a pasta inteira por FTP.
+
